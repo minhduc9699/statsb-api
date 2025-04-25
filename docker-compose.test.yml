@@ -1,0 +1,35 @@
+version: '3.1'
+
+services:
+  nodejs-starter:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    env_file:
+      - ./.env
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./test:/usr/src/app/test
+    networks:
+      - nodejs-starter-net
+    depends_on:
+      - db
+    restart: unless-stopped
+    ports:
+      - ${PORT}:${PORT}
+    command: npm run test:watch
+
+  db:
+    hostname: mongo
+    image: mongo:7
+    expose:
+      - 27017
+    ports:
+      - 27017:27017
+    networks:
+      - nodejs-starter-net
+    command: mongod --quiet --logpath /dev/null
+
+networks:
+  nodejs-starter-net:
+    driver: bridge
