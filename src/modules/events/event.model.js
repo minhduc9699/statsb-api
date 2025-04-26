@@ -15,7 +15,7 @@ const eventSchema = new mongoose.Schema({
       x: Number,
       y: Number,
     },
-    assist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Player' }],
+    assist: { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
   },
   comments: String,
   timestamps: Number,

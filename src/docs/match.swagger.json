@@ -1,0 +1,183 @@
+{
+  "tags": [
+    {
+      "name": "Match",
+      "description": "Operations related to Matches resource"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "MatchInputBody": {
+        "type": "object",
+        "properties": {
+          "teams": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "string"
+            }
+          },
+          "gameType": {
+            "type": "string",
+            "enum": [
+              "1v1",
+              "2v2",
+              "3v3",
+              "4v4",
+              "5v5"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Upcoming",
+              "Ongoing",
+              "Completed"
+            ]
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Match": {
+        "required": [
+          "teams",
+          "gameType"
+        ],
+        "type": "object",
+        "properties": {
+          "teams": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "$ref": "#/components/schemas/Team"
+            }
+          },
+          "gameType": {
+            "type": "string",
+            "enum": [
+              "1v1",
+              "2v2",
+              "3v3",
+              "4v4",
+              "5v5"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Upcoming",
+              "Ongoing",
+              "Completed"
+            ]
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/matches": {
+      "get": {
+        "summary": "Get matches",
+        "tags": [
+          "Match"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SuccessResponse"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create match",
+        "tags": [
+          "Match"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchInputBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SuccessResponse"
+          }
+        }
+      }
+    },
+    "/matches/{_id}": {
+      "get": {
+        "summary": "Get match by id",
+        "tags": [
+          "Match"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SuccessResponse"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update match",
+        "tags": [
+          "Match"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchInputBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SuccessResponse"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete match",
+        "tags": [
+          "Match"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SuccessResponse"
+          }
+        }
+      }
+    }
+  }
+}
+

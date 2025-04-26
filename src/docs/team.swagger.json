@@ -1,0 +1,217 @@
+{
+  "tags": [
+    {
+      "name": "Team",
+      "description": "Operations related to Teams resource"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "TeamInputBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "roster": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "player": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string",
+                  "enum": [
+                    "PG",
+                    "SG",
+                    "SF",
+                    "PF",
+                    "C"
+                  ]
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "Active",
+                    "Inactive"
+                  ]
+                },
+                "jerseyNumber": {
+                  "type": "number",
+                  "format": "int32"
+                },
+                "startDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "endDate": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Roster": {
+        "type": "object",
+        "properties": {
+          "player": {
+            "$ref": "#/components/schemas/Player"
+          },
+          "position": {
+            "type": "string",
+            "enum": [
+              "PG",
+              "SG",
+              "SF",
+              "PF",
+              "C"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Active",
+              "Inactive"
+            ]
+          },
+          "jerseyNumber": {
+            "type": "number",
+            "format": "int32"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Team": {
+        "required": [
+          "name",
+          "roster"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "roster": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Roster"
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/teams": {
+      "get": {
+        "summary": "Get teams",
+        "tags": [
+          "Team"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SuccessResponse"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create team",
+        "tags": [
+          "Team"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TeamInputBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SuccessResponse"
+          }
+        }
+      }
+    },
+    "/teams/{_id}": {
+      "get": {
+        "summary": "Get team by id",
+        "tags": [
+          "Team"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SuccessResponse"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update team",
+        "tags": [
+          "Team"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TeamInputBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SuccessResponse"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete team",
+        "tags": [
+          "Team"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SuccessResponse"
+          }
+        }
+      }
+    }
+  }
+}

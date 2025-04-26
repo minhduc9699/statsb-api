@@ -1,6 +1,10 @@
 const express = require('express');
 const docsRoute = require('./docs.route');
 const authRoutes = require('./auth.route');
+const playerRoutes = require('./player.route');
+const teamRoutes = require('./team.route');
+const matchRoutes = require('./match.route');
+const eventRoutes = require('./event.route');
 const { authMiddleware } = require('../../middlewares');
 
 const router = express.Router();
@@ -9,6 +13,22 @@ const publicRoutes = [
   {
     path: '/auth',
     route: authRoutes,
+  },
+  {
+    path: '/players',
+    route: playerRoutes,
+  },
+  {
+    path: '/teams',
+    route: teamRoutes,
+  },
+  {
+    path: '/matches',
+    route: matchRoutes,
+  },
+  {
+    path: '/events',
+    route: eventRoutes,
   },
 ];
 

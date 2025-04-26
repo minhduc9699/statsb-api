@@ -1,4 +1,4 @@
-const teamStatus = Object.freeze({
+const playerStatus = Object.freeze({
   Active: 'Active',
   Inactive: 'Inactive',
 });
@@ -12,6 +12,6 @@ const playerPosition = Object.freeze({
 });
 
 module.exports = {
-  teamStatus,
+  playerStatus,
   playerPosition,
 };

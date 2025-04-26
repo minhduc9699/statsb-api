@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const { teamStatus, playerPosition } = require('./team.enum');
+const { playerStatus, playerPosition } = require('./team.enum');
 
 const teamSchema = new Schema({
   name: {
@@ -11,7 +11,7 @@ const teamSchema = new Schema({
   roster: [{
     player: { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
     position: { type: String, enum: Object.values(playerPosition) },
-    status: { type: String, enum: Object.values(teamStatus) },
+    status: { type: String, enum: Object.values(playerStatus) },
     jerseyNumber: Number,
     startDate: Date,
     endDate: Date,
