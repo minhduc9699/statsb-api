@@ -6,6 +6,11 @@ const eventSchema = new mongoose.Schema({
   team: { type: mongoose.Schema.Types.ObjectId, ref: 'Team' },
   player: { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
   type: { type: String, enum: Object.values(eventType) },
+  comments: String,
+  timestamps: {
+    start: Number,
+    end: Number,
+  },
   details: {
     foulType: { type: String, enum: Object.values(foulType) },
     shotType: { type: String, enum: Object.values(shotType) },
@@ -17,8 +22,6 @@ const eventSchema = new mongoose.Schema({
     },
     assist: { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
   },
-  comments: String,
-  timestamps: Number,
 }, { timestamps: true, versionKey: false });
 
 const Event = mongoose.model('Event', eventSchema);

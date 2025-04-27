@@ -13,6 +13,7 @@ const matchSchema = new Schema({
   date: Date,
   status: { type: String, enum: Object.values(matchStatus) },
   gameType: { type: String, enum: Object.values(matchType) },
+  videoUrl: { type: String, default: null },
 }, { timestamps: true, versionKey: false });
 
 const Match = mongoose.model('Match', matchSchema);

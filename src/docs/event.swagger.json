@@ -87,8 +87,15 @@
             "type": "string"
           },
           "timestamps": {
-            "type": "number",
-            "format": "int32"
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "number"
+              },
+              "end": {
+                "type": "number"
+              }
+            }
           }
         }
       },
@@ -132,10 +139,12 @@
             "type": "object",
             "properties": {
               "x": {
-                "type": "number"
+                "type": "number",
+                "format": "int32"
               },
               "y": {
-                "type": "number"
+                "type": "number",
+                "format": "int32"
               }
             }
           },
@@ -182,8 +191,17 @@
             "type": "string"
           },
           "timestamps": {
-            "type": "number",
-            "format": "int32"
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "number",
+                "format": "int32"
+              },
+              "end": {
+                "type": "number",
+                "format": "int32"
+              }
+            }
           }
         }
       }

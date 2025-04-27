@@ -1,0 +1,65 @@
+[
+  {
+    "name": "offensive player",
+    "id": 5004100,
+    "color": "#c06060",
+    "type": "rectangle",
+    "attributes": []
+  },
+  {
+    "name": "defensive player",
+    "id": 5004101,
+    "color": "#ff8c00",
+    "type": "rectangle",
+    "attributes": []
+  },
+  {
+    "name": "sports ball",
+    "id": 5004102,
+    "color": "#300000",
+    "type": "rectangle",
+    "attributes": []
+  },
+  {
+    "name": "Shot",
+    "id": 5004230,
+    "color": "#e729cd",
+    "type": "tag",
+    "attributes": []
+  },
+  {
+    "name": "Foul",
+    "id": 5004300,
+    "color": "#e57373",
+    "type": "tag",
+    "attributes": []
+  },
+  {
+    "name": "Turnover",
+    "id": 5004304,
+    "color": "#ba68c8",
+    "type": "tag",
+    "attributes": []
+  },
+  {
+    "name": "Block",
+    "id": 5004305,
+    "color": "#4dd0e1",
+    "type": "tag",
+    "attributes": []
+  },
+  {
+    "name": "Steal",
+    "id": 5004306,
+    "color": "#a1887f",
+    "type": "tag",
+    "attributes": []
+  },
+  {
+    "name": "Rebound",
+    "id": 5004307,
+    "color": "#4dd0e1",
+    "type": "tag",
+    "attributes": []
+  }
+]

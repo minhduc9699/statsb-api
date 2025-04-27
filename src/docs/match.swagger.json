@@ -36,6 +36,9 @@
               "Completed"
             ]
           },
+          "videoUrl": {
+            "type": "string"
+          },
           "date": {
             "type": "string",
             "format": "date-time"
@@ -74,6 +77,9 @@
               "Ongoing",
               "Completed"
             ]
+          },
+          "videoUrl": {
+            "type": "string"
           },
           "date": {
             "type": "string",

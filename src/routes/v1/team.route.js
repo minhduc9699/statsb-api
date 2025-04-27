@@ -4,10 +4,10 @@ const router = Router();
 
 const teamController = require('../../modules/teams/team.controller');
 
-router.post('/create', teamController.createHandler);
-router.get('/get', teamController.getHandler);
-router.get('/get/:_id', teamController.getOneHandler);
-router.put('/update:_id', teamController.updateHandler);
-router.delete('/delete:_id', teamController.deleteHandler);
+router.post('/', teamController.createHandler);
+router.get('/', teamController.getHandler);
+router.get('/:_id', teamController.getOneHandler);
+router.put('/:_id', teamController.updateHandler);
+router.delete('/:_id', teamController.deleteHandler);
 
 module.exports = router;
