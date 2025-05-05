@@ -19,8 +19,12 @@ const createHandler = async (req, res) => {
 
 const getHandler = async (req, res) => {
   try {
-    const filter = req.query;
-    const events = await eventService.get(filter);
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 20;
+    const filter = {...req.query};
+    delete filter.page;
+    delete filter.limit;
+    const events = await eventService.get(filter, page, limit);
     return res.status(200).json({
       message: 'Events fetched successfully',
       data: events,

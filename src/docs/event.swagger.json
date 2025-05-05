@@ -216,7 +216,55 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/idParam"
+            "in": "query",
+            "name": "match",
+            "description": "Match ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "team",
+            "description": "Team ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "player",
+            "description": "Player ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "description": "Event type",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Foul",
+                "Shot",
+                "Rebound",
+                "Assist",
+                "Turnover",
+                "Block",
+                "Steal"
+              ]
+            }
+          },
+          {
+            "$ref": "#/components/parameters/pageParam"
+          },
+          {
+            "$ref": "#/components/parameters/limitParam"
           }
         ],
         "responses": {

@@ -4,9 +4,15 @@ const create = async (event) => {
   return Event.create({ ...event }).lean();
 };
 
-const get = async (filter) => {
-  const events = await Event.find(filter).lean();
-  return events;
+const get = async (filter, page = 1, limit = 20) => {
+  page = Math.max(1, parseInt(page, 10) || 1);
+  limit = Math.max(1, parseInt(limit, 10) || 20);
+  const skip = (page - 1) * limit;
+  const [data, total] = await Promise.all([
+    Event.find(filter).skip(skip).limit(limit).lean(),
+    Event.countDocuments(filter),
+  ]);
+  return { data, page, limit, total };
 };
 
 const getOne = async (filter) => {

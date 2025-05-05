@@ -15,6 +15,9 @@
   "servers": [
     {
       "url": "http://localhost:3000/v1"
+    },
+    {
+      "url": "http://35.220.131.125/v1"
     }
   ],
   "tags": [],
@@ -34,6 +37,24 @@
         "required": true,
         "schema": {
           "type": "string"
+        }
+      },
+      "pageParam": {
+        "name": "page",
+        "description": "Page number",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "limitParam": {
+        "name": "limit",
+        "description": "Items per page",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer"
         }
       }
     },

@@ -31,7 +31,8 @@
     "test:docker:rebuild": "docker-compose --file docker-compose.test.yml build --no-cache",
     "posttest:docker": "docker-compose --file docker-compose.test.yml down --remove-orphans",
     "prepare": "husky install",
-    "mock:player:team": "node src/scripts/mockPlayerAndTeam.js"
+    "mock:player:team": "node src/scripts/mockPlayerAndTeam.js",
+    "mock:match:events": "node src/scripts/mockMatchAndEvent.js"
   },
   "keywords": [
     "node",
