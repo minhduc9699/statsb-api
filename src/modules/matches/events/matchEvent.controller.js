@@ -5,11 +5,6 @@ exports.getEventsByMatch = async (req, res) => {
   try {
     const { matchId } = req.params;
     const events = await MatchEvent.find({ match: matchId })
-      .populate('team')
-      .populate('player')
-      .populate('details.assistedPlayer')
-      .populate('details.fouledPlayer')
-      .populate('details.otherTeamPlayer');
     return res.status(200).json(events);
   } catch (error) {
     console.error('Error fetching events:', error);

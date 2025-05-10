@@ -1,7 +1,7 @@
-const Match = require('./match.model');
-const MatchEvent = require('./events/matchEvent.model');
+const Match = require('../match.model');
+const MatchEvent = require('../events/matchEvent.model');
 const MatchStats = require('./matchStats.model');
-const { eventType } = require('./events/matchEvent.enum');
+const { eventType } = require('../events/matchEvent.enum');
 
 // Get detailed stats for a specific match
 exports.getMatchStats = async (req, res) => {
@@ -183,17 +183,17 @@ exports.updateMatchStats = async (req, res) => {
     const calculateTeamStats = (teamId) => {
       const teamEvents = events.filter(event => event.team._id.toString() === teamId.toString());
       const points = teamEvents.reduce((sum, event) => {
-        if (event.type === EVENT_TYPES.TWO_POINT_SCORE) return sum + 2;
-        if (event.type === EVENT_TYPES.THREE_POINT_SCORE) return sum + 3;
-        if (event.type === EVENT_TYPES.FREE_THROW) return sum + 1;
+        if (event.type === eventType.SCORE_2) return sum + 2;
+        if (event.type === eventType.SCORE_3) return sum + 3;
+        if (event.type === eventType.FREE_THROW) return sum + 1;
         return sum;
       }, 0);
-      const fieldGoals = teamEvents.filter(event => event.type === EVENT_TYPES.TWO_POINT_SCORE || event.type === EVENT_TYPES.THREE_POINT_SCORE).length;
+      const fieldGoals = teamEvents.filter(event => event.type === eventType.SCORE_2 || event.type === eventType.SCORE_3).length;
       const fieldGoalAttempts = teamEvents.filter(event => event.type.includes('Score')).length;
-      const threePointers = teamEvents.filter(event => event.type === EVENT_TYPES.THREE_POINT_SCORE).length;
-      const freeThrows = teamEvents.filter(event => event.type === EVENT_TYPES.FREE_THROW).length;
-      const rebounds = teamEvents.filter(event => event.type === EVENT_TYPES.REBOUND).length;
-      const assists = teamEvents.filter(event => event.type === EVENT_TYPES.ASSIST).length;
+      const threePointers = teamEvents.filter(event => event.type === eventType.SCORE_3).length;
+      const freeThrows = teamEvents.filter(event => event.type === eventType.FREE_THROW).length;
+      const rebounds = teamEvents.filter(event => event.type === eventType.REBOUND).length;
+      const assists = teamEvents.filter(event => event.type === eventType.ASSIST).length;
       const turnovers = teamEvents.filter(event => event.type === EVENT_TYPES.TURNOVER).length;
       const steals = teamEvents.filter(event => event.type === EVENT_TYPES.STEAL).length;
       const blocks = teamEvents.filter(event => event.type === EVENT_TYPES.BLOCK).length;

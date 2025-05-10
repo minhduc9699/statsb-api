@@ -6,21 +6,21 @@ const Match = require('../modules/matches/match.model');
 const MatchEvent = require('../modules/matches/events/matchEvent.model');
 
 // Game structure
-const QUARTER_DURATION_MINUTES = 10; // Standard FIBA duration
+const QUARTER_DURATION_MINUTES = 12; // Standard FIBA duration
 const NUM_QUARTERS = 4;
 const SHOT_CLOCK_SECONDS = 24;
 
 // Event types
 const EVENT_TYPES = {
-  SCORE_2: { name: '2-Point Score', probability: 0.3, points: 2 },
-  SCORE_3: { name: '3-Point Score', probability: 0.2, points: 3 },
-  FREE_THROW: { name: 'Free Throw', probability: 0.15, points: 1 },
+  SCORE_2: { name: '2-Point Score', probability: 0.1, points: 2 },
+  SCORE_3: { name: '3-Point Score', probability: 0.1, points: 3 },
+  FREE_THROW: { name: 'Free Throw', probability: 0.1, points: 1 },
   FOUL: { name: 'Foul', probability: 0.1, points: 0 },
   TURNOVER: { name: 'Turnover', probability: 0.1, points: 0 },
-  STEAL: { name: 'Steal', probability: 0.05, points: 0 },
-  BLOCK: { name: 'Block', probability: 0.05, points: 0 },
-  REBOUND: { name: 'Rebound', probability: 0.15, points: 0 },
-  ASSIST: { name: 'Assist', probability: 0.2, points: 0 }
+  STEAL: { name: 'Steal', probability: 0.1, points: 0 },
+  BLOCK: { name: 'Block', probability: 0.1, points: 0 },
+  REBOUND: { name: 'Rebound', probability: 0.1, points: 0 },
+  ASSIST: { name: 'Assist', probability: 0.1, points: 0 }
 };
 
 // Generate a random player from a team roster
@@ -40,33 +40,58 @@ function simulateEvent(matchId, gameTime, possessionTeam, otherTeam) {
     cumulativeProbability += EVENT_TYPES[eventType].probability;
     if (rand <= cumulativeProbability) {
       const playerId = getRandomPlayer(possessionTeam);
+
+      // Calculate timestamp based on gameTime (e.g., 'Q1 10:30') to distribute events across game duration
+      // Assume a standard basketball game of 48 minutes (4 quarters of 12 minutes each)
+      const timeParts = gameTime.split(' ');
+      const quarter = parseInt(timeParts[0].replace('Q', ''));
+      const minutesLeft = parseFloat(timeParts[1].split(':')[0]);
+      const secondsLeft = parseFloat(timeParts[1].split(':')[1]);
+      // Calculate total minutes elapsed: (quarters completed * 12) + (12 - minutes left in current quarter)
+      const totalMinutesElapsed = ((quarter - 1) * 12) + (12 - (minutesLeft + (secondsLeft / 60)));
+      // Format as hh:mm:ss for the event time (total game time is 48 minutes, so map to current position)
+      const totalSecondsElapsed = Math.floor(totalMinutesElapsed * 60);
+      const hours = Math.floor(totalSecondsElapsed / 3600);
+      const minutes = Math.floor((totalSecondsElapsed % 3600) / 60);
+      const seconds = totalSecondsElapsed % 60;
+      const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      // Add a small offset for end time (5 seconds duration)
+      const endSecondsElapsed = totalSecondsElapsed + 5;
+      const endHours = Math.floor(endSecondsElapsed / 3600);
+      const endMinutes = Math.floor((endSecondsElapsed % 3600) / 60);
+      const endSeconds = endSecondsElapsed % 60;
+      const formattedEndTime = `${String(endHours).padStart(2, '0')}:${String(endMinutes).padStart(2, '0')}:${String(endSeconds).padStart(2, '0')}`;
+
       const event = {
         match: matchId,
-        time: gameTime,
+        timestamps: {
+          start: formattedTime,
+          end: formattedEndTime
+        },
         team: possessionTeam._id,
         player: playerId,
         type: EVENT_TYPES[eventType].name,
         points: EVENT_TYPES[eventType].points,
         details: {
-          foulType: eventType === EVENT_TYPES.FOUL ? 'Personal' : null,
-          shotType: eventType === EVENT_TYPES.SCORE_2 ? 'Jump Shot' : eventType === EVENT_TYPES.SCORE_3 ? 'Three-Point' : null,
-          reboundType: eventType === EVENT_TYPES.REBOUND ? 'Offensive' : null,
-          outcome: eventType === EVENT_TYPES.FOUL ? 'Missed' : eventType === EVENT_TYPES.SCORE_2 || eventType === EVENT_TYPES.SCORE_3 ? 'Made' : null,
-          assistedPlayer: eventType === EVENT_TYPES.ASSIST ? playerId : null
+          foulType: eventType === 'FOUL' ? 'Personal' : null,
+          shotType: eventType === 'SCORE_2' ? 'Jump Shot' : eventType === 'SCORE_3' ? 'Three Point' : null,
+          reboundType: eventType === 'REBOUND' ? 'Offensive' : null,
+          outcome: eventType === 'FOUL' ? 'Missed' : eventType === 'SCORE_2' || eventType === 'SCORE_3' ? 'Made' : null,
+          assistedPlayer: eventType === 'ASSIST' ? playerId : null
         }
       };
       // Additional context for specific events
-      if (eventType === EVENT_TYPES.FOUL) {
+      if (eventType === 'FOUL') {
         const fouledPlayerId = getRandomPlayer(otherTeam);
         event.details.fouledPlayer = fouledPlayerId;
-      } else if (eventType === EVENT_TYPES.ASSIST) {
+      } else if (eventType === 'ASSIST') {
         const assistedPlayerId = getRandomPlayer(possessionTeam);
         event.details.assistedPlayer = assistedPlayerId;
-      } else if (eventType === EVENT_TYPES.TURNOVER || eventType === EVENT_TYPES.STEAL) {
+      } else if (eventType === 'TURNOVER' || eventType === 'STEAL') {
         const otherTeamPlayerId = getRandomPlayer(otherTeam);
         event.details.otherTeamPlayer = otherTeamPlayerId;
       }
-      return { event, changesPossession: eventType === EVENT_TYPES.TURNOVER || eventType === EVENT_TYPES.STEAL };
+      return { event, changesPossession: eventType === 'TURNOVER' || eventType === 'STEAL' || eventType === 'SCORE_2' || eventType === 'SCORE_3' || eventType === 'FREE_THROW' };
     }
   }
   return { event: null, changesPossession: false };
@@ -93,7 +118,9 @@ async function simulateGame(matchId, homeTeam, awayTeam) {
       if (event) {
         gameEvents.push(event);
         score[possessionTeam._id.toString()] += event.points;
+        console.log(`Event: ${event.type} by ${possessionTeam.name}, Score: ${homeTeam.name} ${score[homeTeam._id.toString()]} - ${awayTeam.name} ${score[awayTeam._id.toString()]}`);
         if (changesPossession) {
+          console.log(`Possession changed to ${otherTeam.name}`);
           possessionTeam = otherTeam;
         }
       }

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const matchController = require('./match.controller');
-const matchStatsController = require('./match.stats.controller');
+const matchStatsController = require('./stats/matchStats.controller');
 const matchEventRoutes = require('./events/matchEvent.routes');
 
 // Standard CRUD operations

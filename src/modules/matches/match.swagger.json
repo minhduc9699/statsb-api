@@ -306,10 +306,10 @@
             "type": "object",
             "properties": {
               "start": {
-                "type": "number"
+                "type": "string"
               },
               "end": {
-                "type": "number"
+                "type": "string"
               }
             }
           },
@@ -385,10 +385,10 @@
             "type": "object",
             "properties": {
               "start": {
-                "type": "number"
+                "type": "string"
               },
               "end": {
-                "type": "number"
+                "type": "string"
               }
             }
           },

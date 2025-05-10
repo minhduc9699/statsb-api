@@ -8,8 +8,8 @@ const eventSchema = new mongoose.Schema({
   type: { type: String, enum: Object.values(eventType) },
   comments: String,
   timestamps: {
-    start: Number,
-    end: Number,
+    start: String,
+    end: String,
   },
   details: {
     foulType: { type: String, enum: Object.values(foulType) },
