@@ -1,0 +1,11 @@
+<Labels>
+  <Label value="offensive player" background="#c06060"/>
+  <Label value="defensive player" background="#ff8c00"/>
+  <Label value="sports ball" background="#300000"/>
+  <Label value="Shot" background="#e729cd"/>
+  <Label value="Foul" background="#e57373"/>
+  <Label value="Turnover" background="#ba68c8"/>
+  <Label value="Block" background="#4dd0e1"/>
+  <Label value="Steal" background="#a1887f"/>
+  <Label value="Rebound" background="#4dd0e1"/>
+</Labels>

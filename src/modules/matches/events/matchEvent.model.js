@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { eventType, foulType, shotType, reboundType, outcome } = require('./event.enum');
+const { eventType, foulType, shotType, reboundType, outcome } = require('./matchEvent.enum');
 
 const eventSchema = new mongoose.Schema({
   match: { type: mongoose.Schema.Types.ObjectId, ref: 'Match' },
@@ -20,10 +20,12 @@ const eventSchema = new mongoose.Schema({
       x: Number,
       y: Number,
     },
-    assist: { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
+    fouledPlayer: { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
+    assistedPlayer: { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
+    otherTeamPlayer: { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
   },
 }, { timestamps: true, versionKey: false });
 
-const Event = mongoose.model('Event', eventSchema);
+const MatchEvent = mongoose.model('MatchEvent', eventSchema);
 
-module.exports = Event;
+module.exports = MatchEvent;

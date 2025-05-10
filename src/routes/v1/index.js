@@ -1,10 +1,9 @@
 const express = require('express');
 const docsRoute = require('./docs.route');
-const authRoutes = require('./auth.route');
-const playerRoutes = require('./player.route');
-const teamRoutes = require('./team.route');
-const matchRoutes = require('./match.route');
-const eventRoutes = require('./event.route');
+const authRoutes = require('../../modules/users/auth.route');
+const playerRoutes = require('../../modules/players/player.route');
+const teamRoutes = require('../../modules/teams/team.route');
+const matchRoutes = require('../../modules/matches/match.routes');
 const { authMiddleware } = require('../../middlewares');
 
 const router = express.Router();
@@ -25,11 +24,7 @@ const publicRoutes = [
   {
     path: '/matches',
     route: matchRoutes,
-  },
-  {
-    path: '/events',
-    route: eventRoutes,
-  },
+  }
 ];
 
 const authGuardedRoutes = [

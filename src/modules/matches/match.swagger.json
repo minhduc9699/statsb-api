@@ -1,0 +1,857 @@
+{
+  "tags": [
+    {
+      "name": "Matches",
+      "description": "Operations related to Matches resource"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "MatchInput": {
+        "type": "object",
+        "properties": {
+          "teams": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "string"
+            }
+          },
+          "gameType": {
+            "type": "string",
+            "enum": [
+              "1v1",
+              "2v2",
+              "3v3",
+              "4v4",
+              "5v5"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Upcoming",
+              "Ongoing",
+              "Completed"
+            ]
+          },
+          "videoUrl": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Match": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "homeTeam": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "awayTeam": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "MatchInput": {
+        "type": "object",
+        "properties": {
+          "homeTeam": {
+            "type": "string",
+            "description": "Team ID"
+          },
+          "awayTeam": {
+            "type": "string",
+            "description": "Team ID"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "homeTeam",
+          "awayTeam",
+          "date"
+        ]
+      },
+      "Team": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          }
+        }
+      },
+      "MatchStats": {
+        "type": "object",
+        "properties": {
+          "match": {
+            "type": "string",
+            "description": "Match ID"
+          },
+          "matchDetails": {
+            "$ref": "#/components/schemas/Match"
+          },
+          "teamStats": {
+            "type": "object",
+            "properties": {
+              "home": {
+                "$ref": "#/components/schemas/TeamStats"
+              },
+              "away": {
+                "$ref": "#/components/schemas/TeamStats"
+              }
+            }
+          },
+          "playerStats": {
+            "type": "object",
+            "properties": {
+              "home": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PlayerStats"
+                }
+              },
+              "away": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PlayerStats"
+                }
+              }
+            }
+          },
+          "timelineEvents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimelineEvent"
+            }
+          }
+        }
+      },
+      "TeamStats": {
+        "type": "object",
+        "properties": {
+          "points": {
+            "type": "number"
+          },
+          "fieldGoals": {
+            "type": "number"
+          },
+          "fieldGoalAttempts": {
+            "type": "number"
+          },
+          "fieldGoalPercentage": {
+            "type": "number"
+          },
+          "threePointers": {
+            "type": "number"
+          },
+          "freeThrows": {
+            "type": "number"
+          },
+          "rebounds": {
+            "type": "number"
+          },
+          "assists": {
+            "type": "number"
+          },
+          "turnovers": {
+            "type": "number"
+          },
+          "steals": {
+            "type": "number"
+          },
+          "blocks": {
+            "type": "number"
+          },
+          "fouls": {
+            "type": "number"
+          }
+        }
+      },
+      "PlayerStats": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "points": {
+            "type": "number"
+          },
+          "rebounds": {
+            "type": "number"
+          },
+          "assists": {
+            "type": "number"
+          },
+          "steals": {
+            "type": "number"
+          },
+          "blocks": {
+            "type": "number"
+          },
+          "turnovers": {
+            "type": "number"
+          },
+          "fouls": {
+            "type": "number"
+          }
+        }
+      },
+      "TimelineEvent": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "type": "number"
+          },
+          "team": {
+            "type": "string"
+          },
+          "player": {
+            "type": "string"
+          },
+          "eventType": {
+            "type": "string"
+          },
+          "details": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "type": "string"
+              },
+              "foulType": {
+                "type": "string"
+              },
+              "shotType": {
+                "type": "string"
+              },
+              "reboundType": {
+                "type": "string"
+              },
+              "assistedPlayer": {
+                "$ref": "#/components/schemas/Player"
+              },
+              "fouledPlayer": {
+                "$ref": "#/components/schemas/Player"
+              },
+              "otherTeamPlayer": {
+                "$ref": "#/components/schemas/Player"
+              }
+            }
+          }
+        }
+      },
+      "MatchEvent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "match": {
+            "type": "string",
+            "description": "Match ID"
+          },
+          "team": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "player": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "type": {
+            "type": "string"
+          },
+          "comments": {
+            "type": "string"
+          },
+          "timestamps": {
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "number"
+              },
+              "end": {
+                "type": "number"
+              }
+            }
+          },
+          "details": {
+            "type": "object",
+            "properties": {
+              "foulType": {
+                "type": "string"
+              },
+              "shotType": {
+                "type": "string"
+              },
+              "reboundType": {
+                "type": "string"
+              },
+              "outcome": {
+                "type": "string"
+              },
+              "location": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                }
+              },
+              "assistedPlayer": {
+                "$ref": "#/components/schemas/Player"
+              },
+              "fouledPlayer": {
+                "$ref": "#/components/schemas/Player"
+              },
+              "otherTeamPlayer": {
+                "$ref": "#/components/schemas/Player"
+              }
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "MatchEventInput": {
+        "type": "object",
+        "properties": {
+          "match": {
+            "type": "string",
+            "description": "Match ID"
+          },
+          "team": {
+            "type": "string",
+            "description": "Team ID"
+          },
+          "player": {
+            "type": "string",
+            "description": "Player ID"
+          },
+          "type": {
+            "type": "string"
+          },
+          "comments": {
+            "type": "string"
+          },
+          "timestamps": {
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "number"
+              },
+              "end": {
+                "type": "number"
+              }
+            }
+          },
+          "details": {
+            "type": "object",
+            "properties": {
+              "foulType": {
+                "type": "string"
+              },
+              "shotType": {
+                "type": "string"
+              },
+              "reboundType": {
+                "type": "string"
+              },
+              "outcome": {
+                "type": "string"
+              },
+              "location": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                }
+              },
+              "assistedPlayer": {
+                "$ref": "#/components/schemas/Player"
+              },
+              "fouledPlayer": {
+                "$ref": "#/components/schemas/Player"
+              },
+              "otherTeamPlayer": {
+                "$ref": "#/components/schemas/Player"
+              }
+            }
+          }
+        },
+        "required": [
+          "match",
+          "team",
+          "player",
+          "type"
+        ]
+      }
+    }
+  },
+  "paths": {
+    "/matches": {
+      "get": {
+        "summary": "Get all matches",
+        "tags": [
+          "Matches"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of all matches",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Match"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new match",
+        "tags": [
+          "Matches"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Match created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Match"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/matches/{id}": {
+      "get": {
+        "summary": "Get a match by ID",
+        "tags": [
+          "Matches"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Match ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Match details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Match"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Match not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a match",
+        "tags": [
+          "Matches"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Match ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Match updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Match"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Match not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a match",
+        "tags": [
+          "Matches"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Match ID"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Match deleted successfully"
+          },
+          "404": {
+            "description": "Match not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/matches/{matchId}/stats": {
+      "get": {
+        "summary": "Get detailed stats for a match",
+        "tags": [
+          "Match Stats"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "matchId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Match ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Match statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchStats"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Match not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/matches/{matchId}/stats/update": {
+      "post": {
+        "summary": "Recalculate and update stats for a match",
+        "tags": [
+          "Match Stats"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "matchId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Match ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Match statistics updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchStats"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Match not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/matches/{matchId}/events": {
+      "get": {
+        "summary": "Get all events for a match",
+        "tags": [
+          "Match Events"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "matchId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Match ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of match events",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MatchEvent"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new event for a match",
+        "tags": [
+          "Match Events"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "matchId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Match ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchEventInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Event created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchEvent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/matches/{matchId}/events/{eventId}": {
+      "put": {
+        "summary": "Update a match event",
+        "tags": [
+          "Match Events"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "matchId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Match ID"
+          },
+          {
+            "in": "path",
+            "name": "eventId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Event ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchEventInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Event updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchEvent"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Event not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a match event",
+        "tags": [
+          "Match Events"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "matchId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Match ID"
+          },
+          {
+            "in": "path",
+            "name": "eventId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Event ID"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Event deleted successfully"
+          },
+          "404": {
+            "description": "Event not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  }
+}

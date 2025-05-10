@@ -2,7 +2,7 @@ const { Router } = require('express');
 
 const router = Router();
 
-const teamController = require('../../modules/teams/team.controller');
+const teamController = require('./team.controller');
 
 router.post('/', teamController.createHandler);
 router.get('/', teamController.getHandler);

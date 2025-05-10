@@ -2,7 +2,7 @@ const { Router } = require('express');
 
 const router = Router();
 
-const playerController = require('../../modules/players/player.controller');
+const playerController = require('./player.controller');
 
 router.post('/', playerController.createHandler);
 router.get('/', playerController.getHandler);

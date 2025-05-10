@@ -7,7 +7,7 @@ const {
   loginUserHandler,
   refreshTokenHandler,
   logoutUserHandler,
-} = require('../../modules/users/user.controller');
+} = require('./user.controller');
 
 router.post('/login', loginUserHandler);
 router.get('/logout', logoutUserHandler);

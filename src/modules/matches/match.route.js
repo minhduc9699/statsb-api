@@ -2,7 +2,7 @@ const { Router } = require('express');
 
 const router = Router();
 
-const matchController = require('../../modules/matches/match.controller');
+const matchController = require('./match.controller');
 
 router.post('/', matchController.createHandler);
 router.get('/', matchController.getHandler);

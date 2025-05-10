@@ -1,100 +1,84 @@
 {
   "tags": [
     {
-      "name": "Match",
-      "description": "Operations related to Matches resource"
+      "name": "Players",
+      "description": "Operations related to Players resource"
     }
   ],
   "components": {
     "schemas": {
-      "MatchInputBody": {
-        "type": "object",
-        "properties": {
-          "teams": {
-            "type": "array",
-            "minItems": 2,
-            "maxItems": 2,
-            "items": {
-              "type": "string"
-            }
-          },
-          "gameType": {
-            "type": "string",
-            "enum": [
-              "1v1",
-              "2v2",
-              "3v3",
-              "4v4",
-              "5v5"
-            ]
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "Upcoming",
-              "Ongoing",
-              "Completed"
-            ]
-          },
-          "videoUrl": {
-            "type": "string"
-          },
-          "date": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "Match": {
+      "Player": {
         "required": [
-          "teams",
-          "gameType"
+          "name",
+          "jerseyNumber",
+          "position"
         ],
         "type": "object",
         "properties": {
-          "teams": {
-            "type": "array",
-            "minItems": 2,
-            "maxItems": 2,
-            "items": {
-              "$ref": "#/components/schemas/Team"
-            }
-          },
-          "gameType": {
-            "type": "string",
-            "enum": [
-              "1v1",
-              "2v2",
-              "3v3",
-              "4v4",
-              "5v5"
-            ]
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "Upcoming",
-              "Ongoing",
-              "Completed"
-            ]
-          },
-          "videoUrl": {
+          "name": {
             "type": "string"
           },
-          "date": {
-            "type": "string",
-            "format": "date-time"
+          "avatar": {
+            "type": "string"
+          },
+          "jerseyNumber": {
+            "type": "string"
+          },
+          "position": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "PG",
+                "SG",
+                "SF",
+                "PF",
+                "C"
+              ]
+            }
+          }
+        }
+      },
+      "PlayerInput": {
+        "required": [
+          "name",
+          "jerseyNumber",
+          "position"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "jerseyNumber": {
+            "type": "string"
+          },
+          "position": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "PG",
+                "SG",
+                "SF",
+                "PF",
+                "C"
+              ]
+            }
           }
         }
       }
     }
   },
   "paths": {
-    "/matches": {
+    "/players": {
       "get": {
-        "summary": "Get matches",
+        "summary": "Get players",
         "tags": [
-          "Match"
+          "Players"
         ],
         "responses": {
           "200": {
@@ -103,16 +87,16 @@
         }
       },
       "post": {
-        "summary": "Create match",
+        "summary": "Create player",
         "tags": [
-          "Match"
+          "Players"
         ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MatchInputBody"
+                "$ref": "#/components/schemas/PlayerInput"
               }
             }
           }
@@ -124,11 +108,11 @@
         }
       }
     },
-    "/matches/{_id}": {
+    "/players/{_id}": {
       "get": {
-        "summary": "Get match by id",
+        "summary": "Get player by id",
         "tags": [
-          "Match"
+          "Players"
         ],
         "parameters": [
           {
@@ -142,9 +126,9 @@
         }
       },
       "put": {
-        "summary": "Update match",
+        "summary": "Update player",
         "tags": [
-          "Match"
+          "Players"
         ],
         "parameters": [
           {
@@ -156,7 +140,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MatchInputBody"
+                "$ref": "#/components/schemas/PlayerInput"
               }
             }
           }
@@ -168,9 +152,9 @@
         }
       },
       "delete": {
-        "summary": "Delete match",
+        "summary": "Delete player",
         "tags": [
-          "Match"
+          "Players"
         ],
         "parameters": [
           {
@@ -186,4 +170,3 @@
     }
   }
 }
-

@@ -3,13 +3,8 @@ const { matchStatus, matchType } = require('./match.enum');
 const { Schema } = mongoose;
 
 const matchSchema = new Schema({
-  teams: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Team' }],
-    validate: {
-      validator: (v) => Array.isArray(v) && v.length === 2,
-      message: 'Match must have exactly two teams'
-    }
-  },
+  homeTeam: { type: mongoose.Schema.Types.ObjectId, ref: 'Team' },
+  awayTeam: { type: mongoose.Schema.Types.ObjectId, ref: 'Team' },
   date: Date,
   status: { type: String, enum: Object.values(matchStatus) },
   gameType: { type: String, enum: Object.values(matchType) },

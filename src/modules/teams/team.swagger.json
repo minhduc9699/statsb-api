@@ -1,13 +1,13 @@
 {
   "tags": [
     {
-      "name": "Team",
+      "name": "Teams",
       "description": "Operations related to Teams resource"
     }
   ],
   "components": {
     "schemas": {
-      "TeamInputBody": {
+      "TeamInput": {
         "type": "object",
         "properties": {
           "name": {
@@ -123,7 +123,7 @@
       "get": {
         "summary": "Get teams",
         "tags": [
-          "Team"
+          "Teams"
         ],
         "responses": {
           "200": {
@@ -134,14 +134,14 @@
       "post": {
         "summary": "Create team",
         "tags": [
-          "Team"
+          "Teams"
         ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TeamInputBody"
+                "$ref": "#/components/schemas/TeamInput"
               }
             }
           }
@@ -157,7 +157,7 @@
       "get": {
         "summary": "Get team by id",
         "tags": [
-          "Team"
+          "Teams"
         ],
         "parameters": [
           {
@@ -173,7 +173,7 @@
       "put": {
         "summary": "Update team",
         "tags": [
-          "Team"
+          "Teams"
         ],
         "parameters": [
           {
@@ -185,7 +185,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TeamInputBody"
+                "$ref": "#/components/schemas/TeamInput"
               }
             }
           }
@@ -199,7 +199,7 @@
       "delete": {
         "summary": "Delete team",
         "tags": [
-          "Team"
+          "Teams"
         ],
         "parameters": [
           {
