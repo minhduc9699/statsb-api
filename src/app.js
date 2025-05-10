@@ -36,7 +36,7 @@ app.use(mongoSanitize());
 app.use(compression());
 
 // enable cors
-const corsOptions = { origin: ['http://localhost:3000', 'http://35.220.131.125'] };
+const corsOptions = { origin: ['http://localhost:3000', '*statsb.io.vn*'] };
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
