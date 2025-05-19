@@ -1,0 +1,21 @@
+name: Deploy to Self-Hosted Runner
+
+on:
+  push:
+    branches: [ main ]  # Change this to your main branch name if different
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  deploy:
+    name: Deploy to statsb
+    runs-on: [self-hosted, statsb]  # Specifies the self-hosted runner with label 'statsb'
+
+    steps:
+      - name: Pull latest code
+        run: cd /home/statsb/statsb-api && git pull origin master
+
+      - name: Install dependencies
+        run: cd /home/statsb/statsb-api && npm install
+
+      - name: Restart application
+        run: pm2 restart statsb-api
