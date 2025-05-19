@@ -7,44 +7,6 @@
   ],
   "components": {
     "schemas": {
-      "MatchInput": {
-        "type": "object",
-        "properties": {
-          "teams": {
-            "type": "array",
-            "minItems": 2,
-            "maxItems": 2,
-            "items": {
-              "type": "string"
-            }
-          },
-          "gameType": {
-            "type": "string",
-            "enum": [
-              "1v1",
-              "2v2",
-              "3v3",
-              "4v4",
-              "5v5"
-            ]
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "Upcoming",
-              "Ongoing",
-              "Completed"
-            ]
-          },
-          "videoUrl": {
-            "type": "string"
-          },
-          "date": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
       "Match": {
         "type": "object",
         "properties": {
@@ -89,7 +51,25 @@
             "type": "string",
             "format": "date-time"
           },
+          "gameType": {
+            "type": "string",
+            "enum": [
+              "1v1",
+              "2v2",
+              "3v3",
+              "4v4",
+              "5v5"
+            ]
+          },
           "status": {
+            "type": "string",
+            "enum": [
+              "Upcoming",
+              "Ongoing",
+              "Completed"
+            ]
+          },
+          "videoUrl": {
             "type": "string"
           }
         },
@@ -232,7 +212,7 @@
       "TimelineEvent": {
         "type": "object",
         "properties": {
-          "time": {
+          "timestamps": {
             "type": "number"
           },
           "team": {
@@ -668,6 +648,32 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/MatchStats"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Match not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/matches/stats/batchCalculate": {
+      "post": {
+        "summary": "Recalculate and update stats for a match",
+        "tags": [
+          "Matches"
+        ],
+        "responses": {
+          "200": {
+            "description": "Match statistics updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Match"
                 }
               }
             }

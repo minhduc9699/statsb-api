@@ -3,7 +3,7 @@ const docsRoute = require('./docs.route');
 const authRoutes = require('../../modules/users/auth.route');
 const playerRoutes = require('../../modules/players/player.route');
 const teamRoutes = require('../../modules/teams/team.route');
-const matchRoutes = require('../../modules/matches/match.routes');
+const matchRoutes = require('../../modules/matches/match.route');
 const { authMiddleware } = require('../../middlewares');
 
 const router = express.Router();

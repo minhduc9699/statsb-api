@@ -70,7 +70,7 @@ const matchStatsSchema = new mongoose.Schema({
     }]
   },
   timelineEvents: [{
-    time: Number,
+    time: String,
     team: String,
     player: String,
     eventType: String,
