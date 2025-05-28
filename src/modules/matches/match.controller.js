@@ -142,6 +142,7 @@ const batchCalculateStatsHandler = async (req, res) => {
           }
         }))
       });
+      console.log(updatedMatchStats);
       return {
         ...match,
         teamStats: updatedMatchStats ? updatedMatchStats.teamStats : {},

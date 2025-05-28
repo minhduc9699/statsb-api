@@ -589,7 +589,7 @@
     },
     "/matches/stats/batchCalculate": {
       "post": {
-        "summary": "Recalculate and update stats for a match",
+        "summary": "Recalculate and update stats for all matches",
         "tags": [
           "Matches"
         ],
@@ -600,6 +600,43 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Match"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Match not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/matches/{matchId}/stats": {
+      "get": {
+        "summary": "Get match statistics",
+        "tags": [
+          "Matches"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "matchId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Match ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Match statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchStats"
                 }
               }
             }

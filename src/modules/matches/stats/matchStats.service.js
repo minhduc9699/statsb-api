@@ -3,59 +3,59 @@ const { eventType } = require('../events/matchEvent.enum');
 
 
 const getMatchStats = async (matchId) => {
-    const matchStats = await MatchStats.findOne({ match: matchId });
-    return matchStats;
+  const matchStats = await MatchStats.findOne({ match: matchId.toString() });
+  return matchStats;
 }
 
 const createMatchStats = async (matchId) => {
-    const matchStats = await MatchStats.create({ match: matchId });
-    return matchStats;
+  const matchStats = await MatchStats.create({ match: matchId.toString() });
+  return matchStats;
 }
 
 const updateMatchStats = async (matchId, matchStats) => {
-    const updatedMatchStats = await MatchStats.findOneAndUpdate({ match: matchId }, matchStats, { new: true });
-    return updatedMatchStats;
+  const updatedMatchStats = await MatchStats.findOneAndUpdate({ match: matchId.toString() }, matchStats, { new: true, upsert: true }).exec();
+  return updatedMatchStats;
 }
 
 const deleteMatchStats = async (matchId) => {
-    const deletedMatchStats = await MatchStats.findOneAndDelete({ match: matchId });
-    return deletedMatchStats;
+  const deletedMatchStats = await MatchStats.findOneAndDelete({ match: matchId.toString() });
+  return deletedMatchStats;
 }
 
 const calculateTeamStats = (events, teamId) => {
-      const teamEvents = events.filter(event => event.team._id.toString() === teamId.toString());
-      const points = teamEvents.reduce((sum, event) => {
-        if (event.type === eventType.SCORE_2) return sum + 2;
-        if (event.type === eventType.SCORE_3) return sum + 3;
-        if (event.type === eventType.FREE_THROW) return sum + 1;
-        return sum;
-      }, 0);
-      const fieldGoals = teamEvents.filter(event => event.type === eventType.SCORE_2 || event.type === eventType.SCORE_3).length;
-      const fieldGoalAttempts = teamEvents.filter(event => event.type.includes('Score')).length;
-      const threePointers = teamEvents.filter(event => event.type === eventType.SCORE_3).length;
-      const freeThrows = teamEvents.filter(event => event.type === eventType.FREE_THROW).length;
-      const rebounds = teamEvents.filter(event => event.type === eventType.REBOUND).length;
-      const assists = teamEvents.filter(event => event.type === eventType.ASSIST).length;
-      const turnovers = teamEvents.filter(event => event.type === eventType.TURNOVER).length;
-      const steals = teamEvents.filter(event => event.type === eventType.STEAL).length;
-      const blocks = teamEvents.filter(event => event.type === eventType.BLOCK).length;
-      const fouls = teamEvents.filter(event => event.type === eventType.FOUL).length;
+  const teamEvents = events.filter(event => event.team._id.toString() === teamId.toString());
+  const points = teamEvents.reduce((sum, event) => {
+    if (event.type === eventType.SCORE_2) return sum + 2;
+    if (event.type === eventType.SCORE_3) return sum + 3;
+    if (event.type === eventType.FREE_THROW) return sum + 1;
+    return sum;
+  }, 0);
+  const fieldGoals = teamEvents.filter(event => event.type === eventType.SCORE_2 || event.type === eventType.SCORE_3).length;
+  const fieldGoalAttempts = teamEvents.filter(event => event.type.includes('Score')).length;
+  const threePointers = teamEvents.filter(event => event.type === eventType.SCORE_3).length;
+  const freeThrows = teamEvents.filter(event => event.type === eventType.FREE_THROW).length;
+  const rebounds = teamEvents.filter(event => event.type === eventType.REBOUND).length;
+  const assists = teamEvents.filter(event => event.type === eventType.ASSIST).length;
+  const turnovers = teamEvents.filter(event => event.type === eventType.TURNOVER).length;
+  const steals = teamEvents.filter(event => event.type === eventType.STEAL).length;
+  const blocks = teamEvents.filter(event => event.type === eventType.BLOCK).length;
+  const fouls = teamEvents.filter(event => event.type === eventType.FOUL).length;
 
-      return {
-        points,
-        fieldGoals,
-        fieldGoalAttempts,
-        fieldGoalPercentage: fieldGoalAttempts > 0 ? ((fieldGoals / fieldGoalAttempts) * 100).toFixed(1) : 0,
-        threePointers,
-        freeThrows,
-        rebounds,
-        assists,
-        turnovers,
-        steals,
-        blocks,
-        fouls
-      };
-    };
+  return {
+    points,
+    fieldGoals,
+    fieldGoalAttempts,
+    fieldGoalPercentage: fieldGoalAttempts > 0 ? ((fieldGoals / fieldGoalAttempts) * 100).toFixed(1) : 0,
+    threePointers,
+    freeThrows,
+    rebounds,
+    assists,
+    turnovers,
+    steals,
+    blocks,
+    fouls
+  };
+};
 
 const calculatePlayerStats = (events, teamId) => {
   const teamEvents = events.filter(event => event.team._id.toString() === teamId.toString());
