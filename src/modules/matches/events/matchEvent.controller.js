@@ -5,6 +5,12 @@ exports.getEventsByMatch = async (req, res) => {
   try {
     const { matchId } = req.params;
     const events = await MatchEvent.find({ match: matchId })
+      .populate('match')
+      .populate('team')
+      .populate('player')
+      .populate('details.assistedPlayer')
+      .populate('details.fouledPlayer')
+      .populate('details.otherTeamPlayer');
     return res.status(200).json(events);
   } catch (error) {
     console.error('Error fetching events:', error);
@@ -16,7 +22,13 @@ exports.getEventsByMatch = async (req, res) => {
 exports.createEvent = async (req, res) => {
   try {
     const eventData = req.body;
-    const newEvent = new MatchEvent(eventData);
+    const newEvent = new MatchEvent(eventData)
+      .populate('match')
+      .populate('team')
+      .populate('player')
+      .populate('details.assistedPlayer')
+      .populate('details.fouledPlayer')
+      .populate('details.otherTeamPlayer');
     const savedEvent = await newEvent.save();
     return res.status(201).json(savedEvent);
   } catch (error) {
@@ -30,7 +42,13 @@ exports.updateEvent = async (req, res) => {
   try {
     const { eventId } = req.params;
     const eventData = req.body;
-    const updatedEvent = await MatchEvent.findByIdAndUpdate(eventId, eventData, { new: true });
+    const updatedEvent = await MatchEvent.findByIdAndUpdate(eventId, eventData, { new: true })
+      .populate('match')
+      .populate('team')
+      .populate('player')
+      .populate('details.assistedPlayer')
+      .populate('details.fouledPlayer')
+      .populate('details.otherTeamPlayer');
     if (!updatedEvent) {
       return res.status(404).json({ message: 'Event not found' });
     }

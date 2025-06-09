@@ -125,6 +125,32 @@
         "tags": [
           "Teams"
         ],
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter for teams",
+            "schema": {
+              "type": "object"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit for pagination",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page for pagination",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "$ref": "#/components/responses/SuccessResponse"

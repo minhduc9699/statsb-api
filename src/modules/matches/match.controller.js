@@ -22,8 +22,8 @@ const createHandler = async (req, res) => {
 
 const getHandler = async (req, res) => {
   try {
-    const filter = req.query;
-    const matches = await matchService.get(filter);
+    const { limit = 10, page = 1, ...filter } = req.query;
+    const { matches, count } = await matchService.get(filter, limit, page);
     const matchesWithStats = await Promise.all(matches.map(async match => {
       const matchStats = await matchStatsService.getMatchStats(match._id);
       return {
@@ -36,6 +36,9 @@ const getHandler = async (req, res) => {
     return res.status(200).json({
       message: 'Matches fetched successfully',
       data: matchesWithStats,
+      page,
+      limit,
+      count,
     });
   } catch (error) {
     logger.error('Error in match controller:', error);

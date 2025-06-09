@@ -8,7 +8,10 @@ const playerSchema = new Schema({
     required: true,
   },
   avatar: String,
+  height: Number,
+  weight: Number,
   position: [{ type: String, enum: Object.values(position) }],
+  teams: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Team' }],
 }, { timestamps: true, versionKey: false });
 
 const Player = mongoose.model('Player', playerSchema);

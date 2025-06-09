@@ -1,5 +1,6 @@
 const teamService = require('./team.service');
 const { INTERNAL_SERVER_ERROR } = require('../../utils/errors');
+const logger = require('../../utils/logger');
 
 const createHandler = async (req, res) => {
   try {
@@ -10,7 +11,7 @@ const createHandler = async (req, res) => {
       data: newTeam,
     });
   } catch (error) {
-    logger.error(error);
+    console.log(error);
     return res.status(INTERNAL_SERVER_ERROR.code).json({
       message: INTERNAL_SERVER_ERROR.message,
     });
@@ -19,11 +20,14 @@ const createHandler = async (req, res) => {
 
 const getHandler = async (req, res) => {
   try {
-    const filter = req.query;
-    const teams = await teamService.get(filter);
+    const { limit = 10, page = 1, ...filter } = req.query;
+    const { teams, count } = await teamService.get(filter, limit, page);
     return res.status(200).json({
       message: 'Teams fetched successfully',
       data: teams,
+      page,
+      limit,
+      count,
     });
   } catch (error) {
     logger.error(error);
@@ -42,7 +46,7 @@ const getOneHandler = async (req, res) => {
       data: team,
     });
   } catch (error) {
-    logger.error(error);
+    logger.error(error)
     return res.status(INTERNAL_SERVER_ERROR.code).json({
       message: INTERNAL_SERVER_ERROR.message,
     });

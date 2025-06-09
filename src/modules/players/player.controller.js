@@ -1,5 +1,6 @@
 const playerService = require('./player.service');
 const { INTERNAL_SERVER_ERROR } = require('../../utils/errors');
+const logger = require('../../utils/logger');
 
 const createHandler = async (req, res) => {
   try {
@@ -19,11 +20,14 @@ const createHandler = async (req, res) => {
 
 const getHandler = async (req, res) => {
   try {
-    const filter = req.query;
-    const players = await playerService.get(filter);
+    const { limit = 10, page = 1, ...filter } = req.query;
+    const { players, count } = await playerService.get(filter, limit, page);
     return res.status(200).json({
       message: 'Players fetched successfully',
       data: players,
+      page,
+      limit,
+      count,
     });
   } catch (error) {
     logger.error(error);

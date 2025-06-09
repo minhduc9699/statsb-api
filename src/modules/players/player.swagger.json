@@ -24,6 +24,18 @@
           "jerseyNumber": {
             "type": "string"
           },
+          "weight": {
+            "type": "string"
+          },
+          "height": {
+            "type": "string"
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "type": "#/components/schemas/Team"
+            }
+          },
           "position": {
             "type": "array",
             "items": {
@@ -56,6 +68,12 @@
           "jerseyNumber": {
             "type": "string"
           },
+          "weight": {
+            "type": "string"
+          },
+          "height": {
+            "type": "string"
+          },
           "position": {
             "type": "array",
             "items": {
@@ -79,6 +97,32 @@
         "summary": "Get players",
         "tags": [
           "Players"
+        ],
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter for players",
+            "schema": {
+              "type": "object"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit for pagination",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page for pagination",
+            "schema": {
+              "type": "integer"
+            }
+          }
         ],
         "responses": {
           "200": {

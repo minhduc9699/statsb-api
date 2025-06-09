@@ -4,9 +4,16 @@ const create = async (player) => {
   return Player.create({ ...player });
 };
 
-const get = async (filter) => {
-  const players = await Player.find(filter).lean();
-  return players;
+const get = async (filter, limit=2, page=1) => {
+  const count = await Player.countDocuments(filter);
+  const players = await Player
+    .find(filter)
+    .populate('teams')
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .sort({ createdAt: -1 })
+    .lean();
+  return { players, count };
 };
 
 const getOne = async (filter) => {
