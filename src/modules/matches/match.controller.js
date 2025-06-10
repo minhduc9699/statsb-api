@@ -51,7 +51,7 @@ const getHandler = async (req, res) => {
 const getOneHandler = async (req, res) => {
   try {
     const id = req.params.id;
-    const match = await matchService.getOne(id);
+    const match = await matchService.getById(id);
     const matchStats = await matchStatsService.getMatchStats(match._id);
     return res.status(200).json({
       message: 'Match fetched successfully',
