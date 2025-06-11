@@ -39,7 +39,7 @@ const getHandler = async (req, res) => {
 
 const getOneHandler = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.params._id;
     const team = await teamService.getById(id);
     return res.status(200).json({
       message: 'Team fetched successfully',
