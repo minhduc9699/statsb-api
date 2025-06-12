@@ -13,7 +13,7 @@ router.post('/:matchId/stats/update', matchStatsController.updateMatchStats);
 
 router.use('/:matchId/events', matchEventRoutes);
 
-router.get('/:id', matchController.getOneHandler);
+router.get('/:id/getMatch', matchController.getOneHandler);
 router.put('/:id', matchController.updateHandler);
 router.delete('/:id', matchController.deleteHandler);
 
