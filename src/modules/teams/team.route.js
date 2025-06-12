@@ -6,7 +6,7 @@ const teamController = require('./team.controller');
 
 router.post('/', teamController.createHandler);
 router.get('/', teamController.getHandler);
-router.get('/:_id', teamController.getOneHandler);
+router.get('/:id/getTeam', teamController.getOneHandler);
 router.put('/:_id', teamController.updateHandler);
 router.delete('/:_id', teamController.deleteHandler);
 
