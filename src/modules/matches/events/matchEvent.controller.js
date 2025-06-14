@@ -26,10 +26,10 @@ exports.createEvent = async (req, res) => {
     const populatedEvent = await savedEvent
       .populate('match')
       .populate('team')
-      .populate('player')
-      .populate('details.assistedPlayer')
-      .populate('details.fouledPlayer')
-      .populate('details.otherTeamPlayer');
+      .populate('player', 'name')
+      .populate('details.assistedPlayer', 'name')
+      .populate('details.fouledPlayer', 'name')
+      .populate('details.otherTeamPlayer', 'name');
     return res.status(201).json(populatedEvent);
   } catch (error) {
     console.error('Error creating event:', error);
