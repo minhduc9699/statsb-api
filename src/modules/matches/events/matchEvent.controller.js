@@ -21,6 +21,7 @@ exports.getEventsByMatch = async (req, res) => {
 // Create a new event
 exports.createEvent = async (req, res) => {
   try {
+    const eventData = req.body;
     const newEvent = new MatchEvent(eventData);
     const savedEvent = await newEvent.save();
     return res.status(201).json(savedEvent);
