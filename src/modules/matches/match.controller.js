@@ -23,7 +23,7 @@ const createHandler = async (req, res) => {
 const getHandler = async (req, res) => {
   try {
     const { limit = 10, page = 1, ...filter } = req.query;
-    const { matches, count } = await matchService.get(filter, limit, page);
+    const { matches, count } = await matchService.getPagination(filter, limit, page);
     const matchesWithStats = await Promise.all(matches.map(async match => {
       const matchStats = await matchStatsService.getMatchStats(match._id);
       return {
@@ -104,9 +104,7 @@ const deleteHandler = async (req, res) => {
 };
 
 const batchCalculateStatsHandler = async (req, res) => {
-  try {
-    const filter = req.query;
-    const matches = await matchService.get(filter);
+    const matches = await matchService.get();
     const matchesWithStats = await Promise.all(matches.map(async match => {
       const events = await MatchEvent.find({ match: match._id })
         .populate('team')
@@ -145,7 +143,6 @@ const batchCalculateStatsHandler = async (req, res) => {
           }
         }))
       });
-      console.log(updatedMatchStats);
       return {
         ...match,
         teamStats: updatedMatchStats ? updatedMatchStats.teamStats : {},
@@ -158,12 +155,7 @@ const batchCalculateStatsHandler = async (req, res) => {
       message: 'Matches stats updated successfully',
       data: matchesWithStats,
     });
-  } catch (error) {
-    logger.error('Error in match controller:', error);
-    return res.status(INTERNAL_SERVER_ERROR.code).json({
-      message: INTERNAL_SERVER_ERROR.message,
-    });
-  }
+
 }
 
 
