@@ -25,8 +25,6 @@ app.use(cookieParser());
 
 // parse json request body
 app.use(express.json());
-const methodOverride = require('method-override');
-app.use(methodOverride('_method'));
 
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
