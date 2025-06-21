@@ -21,16 +21,10 @@ exports.getEventsByMatch = async (req, res) => {
 // Create a new event
 exports.createEvent = async (req, res) => {
   try {
+    const eventData = req.body;
     const newEvent = new MatchEvent(eventData);
     const savedEvent = await newEvent.save();
-    const populatedEvent = await savedEvent
-      .populate('match')
-      .populate('team')
-      .populate('player', 'name')
-      .populate('details.assistedPlayer', 'name')
-      .populate('details.fouledPlayer', 'name')
-      .populate('details.otherTeamPlayer', 'name');
-    return res.status(201).json(populatedEvent);
+    return res.status(201).json(savedEvent);
   } catch (error) {
     console.error('Error creating event:', error);
     return res.status(500).json({ message: 'Internal server error' });

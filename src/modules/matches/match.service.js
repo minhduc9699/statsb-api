@@ -4,7 +4,12 @@ const create = async (match) => {
   return Match.create({ ...match });
 };
 
-const get = async (filter, limit=10, page=1) => {
+const get = async () => {
+  const matches = await Match.find()
+  return matches;
+}
+
+const getPagination = async (filter, limit=10, page=1) => {
   const count = await Match.countDocuments(filter);
   const matches = await Match.find(filter)
     .populate('homeTeam')
@@ -37,6 +42,7 @@ const remove = async (id) => {
 const matchService = {
   create,
   get,
+  getPagination,
   getOne,
   getById,
   update,
