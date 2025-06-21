@@ -10,6 +10,7 @@ const playerSchema = new Schema({
   avatar: String,
   height: Number,
   weight: Number,
+  jerseyNumber: Number,
   position: [{ type: String, enum: Object.values(position) }],
   teams: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Team' }],
 }, { timestamps: true, versionKey: false });
