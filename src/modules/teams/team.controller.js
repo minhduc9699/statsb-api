@@ -55,7 +55,7 @@ const getOneHandler = async (req, res) => {
 
 const updateHandler = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.params._id;
     const data = req.body;
     const updatedTeam = await teamService.update(id, data);
     return res.status(200).json({
@@ -72,11 +72,17 @@ const updateHandler = async (req, res) => {
 
 const deleteHandler = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.params._id;
+    const teamFound = await teamService.getById(id);
+    if (!teamFound) {
+      return res.status(404).json({
+        message: 'Team not found',
+      });
+    }
     const deletedTeam = await teamService.remove(id);
     return res.status(200).json({
       message: 'Team deleted successfully',
-      data: deletedTeam,
+      data: teamFound,
     });
   } catch (error) {
     logger.error(error);

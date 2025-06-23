@@ -55,7 +55,7 @@ const getOneHandler = async (req, res) => {
 
 const updateHandler = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.params._id;
     const data = req.body;
     const updatedPlayer = await playerService.update(id, data);
     return res.status(200).json({
@@ -72,11 +72,17 @@ const updateHandler = async (req, res) => {
 
 const deleteHandler = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.params._id;
+    const playerFound = await playerService.getById(id);
+    if (!playerFound) {
+      return res.status(404).json({
+        message: 'Player not found',
+      });
+    }
     const deletedPlayer = await playerService.remove(id);
     return res.status(200).json({
       message: 'Player deleted successfully',
-      data: deletedPlayer,
+      data: playerFound,
     });
   } catch (error) {
     logger.error(error);

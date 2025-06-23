@@ -27,7 +27,7 @@ const getById = async (id) => {
 };
 
 const update = async (id, player) => {
-  return Player.findByIdAndUpdate(id, player, { new: true }).lean();
+  return Player.findByIdAndUpdate(id, player, { new: true, upsert: true }).lean();
 };
 
 const remove = async (id) => {

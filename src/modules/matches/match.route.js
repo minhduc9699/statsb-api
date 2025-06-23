@@ -13,8 +13,8 @@ router.post('/:matchId/stats/update', matchStatsController.updateMatchStats);
 
 router.use('/:matchId/events', matchEventRoutes);
 
-router.get('/:id/getMatch', matchController.getOneHandler);
-router.put('/:id', matchController.updateHandler);
-router.delete('/:id', matchController.deleteHandler);
+router.get('/:_id/getMatch', matchController.getOneHandler);
+router.put('/:_id', matchController.updateHandler);
+router.delete('/:_id', matchController.deleteHandler);
 
 module.exports = router;

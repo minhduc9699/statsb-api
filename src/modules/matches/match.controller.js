@@ -50,7 +50,7 @@ const getHandler = async (req, res) => {
 
 const getOneHandler = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.params._id;
     const match = await matchService.getById(id);
     const matchStats = await matchStatsService.getMatchStats(match._id);
     return res.status(200).json({
@@ -72,7 +72,7 @@ const getOneHandler = async (req, res) => {
 
 const updateHandler = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.params._id;
     const data = req.body;
     const updatedMatch = await matchService.update(id, data);
     return res.status(200).json({
@@ -89,7 +89,7 @@ const updateHandler = async (req, res) => {
 
 const deleteHandler = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.params._id;
     const deletedMatch = await matchService.remove(id);
     return res.status(200).json({
       message: 'Match deleted successfully',
