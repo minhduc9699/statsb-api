@@ -18,7 +18,7 @@
             "items": {
               "type": "object",
               "properties": {
-                "src": {
+                "url": {
                   "type": "string"
                 },
                 "tag": {
@@ -91,7 +91,7 @@
             "items": {
               "type": "object",
               "properties": {
-                "src": {
+                "url": {
                   "type": "string"
                 },
                 "tag": {
