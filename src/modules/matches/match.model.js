@@ -10,7 +10,7 @@ const matchSchema = new Schema({
   gameType: { type: String, enum: Object.values(matchType) },
   videoUrl: { type: [
     {
-      url: String,
+      src: String,
       tag: [String],
     }
   ], default: null },
