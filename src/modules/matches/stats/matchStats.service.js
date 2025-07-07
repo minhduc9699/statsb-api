@@ -25,9 +25,9 @@ const deleteMatchStats = async (matchId) => {
 const calculateTeamStats = (events, teamId) => {
   const teamEvents = events.filter(event => event.team._id.toString() === teamId.toString());
   const points = teamEvents.reduce((sum, event) => {
-    if (event.type === eventType.SCORE_2) return sum + 2;
-    if (event.type === eventType.SCORE_3) return sum + 3;
-    if (event.type === eventType.FREE_THROW) return sum + 1;
+    if (event.type === eventType.SCORE_2 && event.details.outcome === 'Made') return sum + 2;
+    if (event.type === eventType.SCORE_3 && event.details.outcome === 'Made') return sum + 3;
+    if (event.type === eventType.FREE_THROW && event.details.outcome === 'Made') return sum + 1;
     return sum;
   }, 0);
   const fieldGoals = teamEvents.filter(event => event.type === eventType.SCORE_2 || event.type === eventType.SCORE_3).length;
